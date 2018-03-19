@@ -10,7 +10,9 @@ app.get('/scrape', function(req, res){
   request(url, function(error, response, html){
     if(!error){
         var $ = cheerio.load(html),$header = $('title').html();
-        var price= [], title = [];
+        var price= [], title = [], margin = [25,34,56,61,68,72,45,63,83],
+        currentPrice = [6,7,5,8,5,6,21,26,29], newPrice = [4,5,4,6,4,3,18,17,18]
+        outOftheDoor = [4,5,3,5,2,4,15,18,17];
         var data, data1, out=[],product_name=[],product_price_description=[];
         var product_price = [], companyName = [];
         var json = {name : "", price : ""};
@@ -41,9 +43,16 @@ app.get('/scrape', function(req, res){
       })
         json.company = companyName[0];
         product_name.map((item,key)=>{
-          out.push({'productName':item,'productPrice':product_price[key],'companyName':companyName[0]});
+          out.push({'productName':item,
+          'productPrice':product_price[key],
+          'companyName':companyName[0],
+          'margin': margin[key],
+          'currentPrice': currentPrice[key],
+          'newPrice': newPrice[key],
+          'outOftheDoor': outOftheDoor[key]
+        });
         })
-        console.log(out);
+console.log(out);
     }
 
     fs.writeFile('output.json', JSON.stringify(json, null, 4), function(err){

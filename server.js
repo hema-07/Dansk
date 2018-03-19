@@ -3,7 +3,7 @@ var fs      = require('fs');
 var request = require('request');
 var cheerio = require('cheerio');
 var app     = express();
-
+var PORT = process.env.PORT || 8001;
 app.get('/scrape', function(req, res){
   url = 'https://www.iposen.dk/shop/display/products?offers=1&category_id=41';
 
@@ -63,6 +63,6 @@ console.log(out);
   })
 })
 
-app.listen('8001')
+app.listen(PORT);
 console.log('Magic happens on port 8001');
 exports = module.exports = app;
